@@ -1,0 +1,289 @@
+Fractional:
+
+w=[eval(x) for x in input("Enter weights:").split()]
+
+p=[eval(x) for x in input("Enter profits:").split()]
+
+m=int(input("max capacity:"))
+
+n=len(w)
+
+l=[]
+
+tw=0
+
+tp=0
+
+sol=[0]*n
+
+for i in range(n):
+
+    l.append((i,p[i],w[i],p[i]/w[i]))
+
+l.sort(key=lambda x:x[3],reverse=True)
+
+for j in range(n):
+
+    if l[j][2]<=m-tw:
+
+        tw=tw+l[j][2]
+
+        tp=tp+l[j][1]
+
+        sol[l[j][0]]=1
+
+    else:
+
+        if(m-tw!=0):
+
+            tp=tp+l[j][1]*((m-tw)/l[j][2])
+
+            sol[l[j][0]]=(m-tw)/l[j][2]
+
+            tw=m
+
+print(sol,tp)
+
+Job:
+
+process=[eval(x) for x in input("Enter the id:").split()]
+
+pro=[eval(x) for x in input("Enter the profits:").split()]
+
+dl=[eval(x) for x in input("Enter the deadlines:").split()]
+
+n=len(pro)
+
+job=[]
+
+tp=0
+
+for i in range(n):
+
+    job.append([process[i],pro[i],dl[i]])
+
+job.sort(key=lambda x:x[1],reverse=True)
+
+dlsp=[i[1] for i in job]
+
+m=max(dlsp)
+
+or=[0]*m
+
+for i in job:
+
+    ind=i[2]
+
+    while(ind!=0):
+
+        if(l[ind-1]==0):
+
+            l[ind-1]=i[0]
+
+            tp=tp+i[1]
+
+            break
+
+        else:
+
+            ind-=1
+
+print(l)
+
+print(tp)
+
+Nqueen:
+
+def place(row,col):
+
+    for i in range(row):
+
+        if (x[i]==col) or (abs(x[i]-col)==abs(i-row)):
+
+            return False
+
+    return True
+
+def Print_Board(x):
+
+    print(x)
+
+    for i in range(len(x)):
+
+        temp=[0]*(len(x))
+
+        temp[x[i]]=i+1
+
+        print(temp)
+
+    print("")
+
+def nQueens(row,n):
+
+    for i in range(n):
+
+        if place(row,i):
+
+            x[row]=i
+
+            if row==n-1:
+
+                Print_Board(x)
+
+                break
+
+            else:
+
+                nQueens(row+1,n)
+
+ 
+
+n=int(input("Enter the number of Queens: "))
+
+x=[-1]*(n)
+
+print("The possible arrangement of Queens in chessboard are: ")
+
+nQueens(0,n)
+
+0/1:
+
+p=[eval(x) for x in input().split()]
+
+wt=[eval(x) for x in input().split()]
+
+m=int(input("Enter max capacity:"))
+
+n=len(p)
+
+k=[[0 for i in range(m+1)]for j in range(n+1)]
+
+print(k)
+
+sol=[0]*n
+
+for i in range(n+1):
+
+    for w in range(m+1):
+
+        if(i==0 or w==0):
+
+            k[i][w]=0
+
+        elif(wt[i-1]<=w):
+
+            k[i][w]=max(p[i-1]+k[i-1][w-wt[i-1]],k[i-1][w])
+
+        else:
+
+            k[i][w]=k[i-1][w]
+
+    print(k)
+
+print(k[n][w])
+
+i,j=n,m
+
+while(i>0 and j>0):
+
+    if(k[i][j]!=k[i-1][j]):
+
+        sol[i-1]=1
+
+        j=j-wt[i-1]
+
+        i=i-1
+
+    else:
+
+        i=i-1
+
+print(sol)
+
+Graph:
+
+n=int(input("no of subjects: "))
+
+sub=[]
+
+for i in range(n):
+
+    print("Enter subject_code and subject_name for {}".format(i+1))
+
+    l=list(map(str,input().split()))
+
+    sub.append(l)
+
+print(sub)      
+
+x=[0 for x in range(n)]
+
+G=[[0 for i in range(n)]for i in range(n)]
+
+#print(G)
+
+for i in range(n):
+
+    print("Enter clashes for subject {}".format(i+1))
+
+    l=list(map(int,input().split()))
+
+    for j in l:
+
+        G[i][j-1]=1
+
+print(G)
+
+def TimeScheduling(k,i):
+
+    while(i==True):
+
+        NextValue(k)
+
+        if(x[k]==0):            
+
+            return
+
+        if(k==n-1):
+
+            print(*sub)
+
+            print("Time line schedule seqquence is : ",*x)
+
+            solution=True
+
+            exit(0)
+
+            i=False          
+
+        else:
+
+            i=TimeScheduling(k+1,i)
+
+    
+
+def NextValue(k):
+
+    while(True):
+
+        x[k]=(x[k]+1)%(m+1)
+
+        if (x[k]==0):
+
+            return 
+
+        for j in range(n):
+
+            if (G[k][j]!=0 and x[k]==x[j]):
+
+                break
+
+        if(j==n-1):
+
+            return
+
+for m in range(1,n+1):
+
+    TimeScheduling(0,True)
+
+#TimeScheduling(0,True)
